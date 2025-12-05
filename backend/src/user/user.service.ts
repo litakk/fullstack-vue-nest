@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { nanoid } from 'nanoid';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -21,5 +23,18 @@ export class UserService {
         return this.prisma.user.findUnique({
             where: { email },
         });
+    }
+
+    async checkUser(email: string, password: string) { // Проверка на login
+        const user = await this.findUserByEmail(email)
+
+        if (!user) {
+            throw new UnauthorizedException("Неверный email или пароль")
+        }
+        const inMatch = await bcrypt.compare(password, user.password)
+        if (!inMatch) {
+            throw new UnauthorizedException('Неверный email или пароль');
+        }
+        return user
     }
 }

@@ -1,3 +1,4 @@
+
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
@@ -22,4 +23,15 @@ export class UserController {
         const { password: _, ...result } = user;
         return result;
     }
+
+    @Post('login')
+    async login(
+        @Body('email') email: string,
+        @Body('password') password: string,
+    ) {
+        const user = await this.userService.checkUser(email, password)//Передаю email и password в user.servis
+        const { password: _, ...result } = user
+        return result
+    }
+
 }
