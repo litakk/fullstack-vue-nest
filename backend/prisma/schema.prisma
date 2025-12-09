@@ -18,19 +18,39 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt      @map("updated_at")
 
-  games TicTac[]
+  gamesAsX TicTac[] @relation("PlayerX")
+  gamesAsO TicTac[] @relation("PlayerO")
 
   @@map("users")
 }
 
-model TicTac {
-  id        String   @id @default(cuid())
-  playerId  String
-  board     String   @default("---------") // 9 символов для клеток, '-' пустая
-  turn      String   @default("X") // чей ход: X или O
-  status    String   @default("playing") // playing, won, draw
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum PlayerSymbol {
+  X
+  O
+}
 
-  player User @relation(fields: [playerId], references: [id])
+enum GameStatus {
+  waiting
+  playing
+  won
+  draw
+}
+
+model TicTac {
+  id          String       @id @default(cuid())
+  playerXId   String
+  playerOId   String?
+  board       String       @default("---------") // 9 символов для клеток, '-' пустая
+  currentTurn PlayerSymbol @default(X)
+  status      GameStatus   @default(waiting) // waiting, playing, won, draw
+  winner      PlayerSymbol?
+  isBotGame   Boolean      @default(false)
+  botLevel    String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  playerX User @relation("PlayerX", fields: [playerXId], references: [id])
+  playerO User? @relation("PlayerO", fields: [playerOId], references: [id])
+
 }

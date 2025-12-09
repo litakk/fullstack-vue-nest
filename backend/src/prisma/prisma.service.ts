@@ -11,7 +11,7 @@ export class PrismaService
   constructor() {
     // Prisma 7: создаём Pool для Postgres и передаём его в PrismaPg adapter
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+        connectionString: process.env.DATABASE_URL,
     });
     const adapter = new PrismaPg(pool);
 

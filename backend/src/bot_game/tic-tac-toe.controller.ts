@@ -1,17 +1,29 @@
-import { Controller, Post, Param, Body } from '@nestjs/common';
-import { TicTacToeService } from './tic-tac-toe.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { BotTicTacToeService } from './tic-tac-toe.service';
 
 @Controller('tic-tac-toe')
-export class TicTacToeController {
-    constructor(private readonly tttService: TicTacToeService) { }
+export class BotTicTacToeController {
+  constructor(private readonly tttService: BotTicTacToeService) {}
 
-    @Post('create/:playerId')
-    create(@Param('playerId') playerId: string) {
-        return this.tttService.createGame(playerId);
-    }
+  @Post('create')
+  create(
+    @Body('playerId') playerId: string,
+    @Body('botLevel') botLevel?: string,
+  ) {
+    return this.tttService.createGame(playerId, botLevel);
+  }
 
-    @Post('move/:gameId')
-    makeMove(@Param('gameId') gameId: string, @Body('index') index: number) {
-        return this.tttService.makeMove(gameId, index);
-    }
+  @Get(':gameId')
+  get(@Param('gameId') gameId: string) {
+    return this.tttService.getGame(gameId);
+  }
+
+  @Post('move/:gameId')
+  makeMove(
+    @Param('gameId') gameId: string,
+    @Body('index') index: number,
+    @Body('playerId') playerId?: string,
+  ) {
+    return this.tttService.makeMove(gameId, index, playerId);
+  }
 }
