@@ -6,11 +6,14 @@ async function bootstrap() {
   // Создаём приложение Nest
   const app = await NestFactory.create(AppModule);
 
-  // Включаем CORS для фронтенда (Vite на localhost:5173)
-  app.enableCors({
-    origin: 'https://tic-tac-toe-gamma-tan-42.vercel.app', // разрешаем фронтенд
-    credentials: true,               // если используем cookies/Authorization
-  });
+app.enableCors({
+  origin: [
+    'http://localhost:5173',                         // Локалка для разработки
+    'https://tic-tac-toe-gamma-tan-42.vercel.app',  // Первый домен Vercel
+    'https://fullstack-vue-nest.vercel.app'         // Второй (главный) домен Vercel
+  ],
+  credentials: true,
+});
 
   // Берём порт из .env или по умолчанию 3000
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
