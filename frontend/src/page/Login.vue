@@ -13,7 +13,7 @@ const useUser = useUserStore()
 
 async function login() {
   try {
-    const res = await axios.post("http://localhost:3000/users/login", {
+    const res = await axios.post("https://tic-tac-toe-backend-equg.onrender.com/users/login", {
       email: email.value,
       password: password.value,
     })
