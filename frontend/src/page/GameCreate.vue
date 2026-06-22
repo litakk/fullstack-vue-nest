@@ -12,7 +12,7 @@ const createBotGame = async () => {
     return;
   }
   try {
-    const res = await axios.post('http://localhost:3000/tic-tac-toe/create', {
+    const res = await axios.post('https://tic-tac-toe-backend-equg.onrender.com/tic-tac-toe/create', {
       playerId: userStore.user?.id,
     });
     router.push(`/games/active/${res.data?.id}`);
@@ -29,7 +29,7 @@ const createMultiplayerGame = async () => {
   }
   try {
     const res = await axios.post(
-      'http://localhost:3000/multiplayer-tic-tac-toe/create',
+      'https://tic-tac-toe-backend-equg.onrender.com/multiplayer-tic-tac-toe/create',
       { playerId: userStore.user?.id },
     );
     router.push(`/games/active/${res.data?.id}`);
