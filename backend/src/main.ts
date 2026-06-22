@@ -8,7 +8,7 @@ async function bootstrap() {
 
   // Включаем CORS для фронтенда (Vite на localhost:5173)
   app.enableCors({
-    origin: 'http://localhost:5173', // разрешаем фронтенд
+    origin: 'https://tic-tac-toe-gamma-tan-42.vercel.app', // разрешаем фронтенд
     credentials: true,               // если используем cookies/Authorization
   });
 
