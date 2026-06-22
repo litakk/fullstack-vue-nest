@@ -80,7 +80,7 @@ const statusText = computed(() => {
 
 const loadGame = async () => {
   try {
-    const res = await axios.get(`http://localhost:3000/games/${gameId}`);
+    const res = await axios.get(`https://tic-tac-toe-backend-equg.onrender.com/games/${gameId}`);
     if (!res.data) {
       throw new Error('Игра не найдена');
     }
@@ -98,7 +98,7 @@ const loadGame = async () => {
 
 const initSocket = () => {
   if (socket.value) return;
-  socket.value = io('http://localhost:3000', {
+  socket.value = io('https://tic-tac-toe-backend-equg.onrender.com', {
     transports: ['websocket'],
   });
 
@@ -135,7 +135,7 @@ const makeMove = async (x: number, y: number) => {
   try {
     if (game.value.isBotGame) {
       const res = await axios.post(
-        `http://localhost:3000/tic-tac-toe/move/${gameId}`,
+        `https://tic-tac-toe-backend-equg.onrender.com/tic-tac-toe/move/${gameId}`,
         { index, playerId: userStore.user?.id },
       );
       applyGame(res.data);
