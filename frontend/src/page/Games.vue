@@ -19,7 +19,7 @@ const error = ref<string | null>(null);
 const loadGames = async () => {
   try {
     loading.value = true;
-    const res = await axios.get('http://localhost:3000/multiplayer-tic-tac-toe/available');
+    const res = await axios.get('https://tic-tac-toe-backend-equg.onrender.com/multiplayer-tic-tac-toe/available');
     games.value = res.data || [];
   } catch (e: any) {
     error.value = e?.response?.data?.message || e.message;
