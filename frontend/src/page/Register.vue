@@ -19,7 +19,7 @@ async function register() {
   }
 
   try {
-    await axios.post("http://localhost:3000/users/register", {
+    await axios.post("https://tic-tac-toe-backend-equg.onrender.com/users/register", {
       email: email.value,
       name: name.value,
       password: password.value,
